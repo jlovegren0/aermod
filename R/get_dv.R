@@ -5,7 +5,7 @@
 #' @param mat matrix
 #' @return double
 #' @export
-function(mat,diag=FALSE){
+get_dv <- function(mat,diag=FALSE){
 	hrbaseline <- attr(mat,'hrbaseline')
 	nhr <- dim(mat)[1]
 	receps <- paste0("V",1:dim(mat)[2])

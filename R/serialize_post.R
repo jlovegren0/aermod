@@ -9,7 +9,7 @@
 #' @return logical
 #' @name serialize_post
 #' @export
-function( mat , fname , srcgrp ) {
+serialize_post <- function( mat , fname , srcgrp ) {
 nhr <- dim(mat)[1]
 nrcp <- dim(mat)[2]
 u <- attr(mat,'hrbaseline') +hours(1:nhr)
