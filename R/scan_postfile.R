@@ -4,6 +4,7 @@
 #' Hours are not written individually, nor are source groups
 #' as they are saved as attributes of the matrix.
 #'
+#' @name scan_postfile
 #' @param f character
 #' @return matrix
 #' @export

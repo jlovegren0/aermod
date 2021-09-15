@@ -1,6 +1,7 @@
 #' Calculate SO2 Design value
 #' 
 #' Report 2010 SO2 NAAQS DESIGN VALUE
+#' @name get_dv
 #' @param mat matrix
 #' @return double
 #' @export

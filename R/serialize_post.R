@@ -7,6 +7,7 @@
 #' @param srcgrp character
 #'
 #' @return logical
+#' @name serialize_post
 #' @export
 function( mat , fname , srcgrp ) {
 nhr <- dim(mat)[1]
