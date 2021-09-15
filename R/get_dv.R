@@ -1,3 +1,9 @@
+#' Calculate SO2 Design value
+#' 
+#' Report 2010 SO2 NAAQS DESIGN VALUE
+#' @param mat matrix
+#' @return double
+#' @export
 function(mat,diag=FALSE){
 	require(tidyr)
 	hrbaseline <- attr(mat,'hrbaseline')

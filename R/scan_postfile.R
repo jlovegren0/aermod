@@ -1,3 +1,12 @@
+#' Scan POST file
+#' 
+#' Reads Fortran unformatted I/O POSTFILE and conver to matrix.
+#' Hours are not written individually, nor are source groups
+#' as they are saved as attributes of the matrix.
+#'
+#' @param f character
+#' @return matrix
+#' @export
 function(f){
 require(lubridate)
 require(stringr)

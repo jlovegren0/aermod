@@ -1,8 +1,16 @@
+#' Serialize impact matrix
+#'
+#' Serialize impact matrix to AERMOD unformatted binary POST file.
+#'
+#' @param mat matrix
+#' @param fname character
+#' @param srcgrp character
+#'
+#' @return logical
+#' @export
 function( mat , fname , srcgrp ) {
 require(purrr)
 require(magrittr)
-# Serialize impact matrix to AERMOD unformatted binary POST file
-# requires purrr, lubridate,magrittr
 nhr <- dim(mat)[1]
 nrcp <- dim(mat)[2]
 u <- attr(mat,'hrbaseline') +hours(1:nhr)
