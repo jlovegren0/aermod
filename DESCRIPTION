@@ -1,13 +1,13 @@
 Package: aermod
-Title: What the Package Does (One Line, Title Case)
+Title: Work with AERMOD POST files 
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jesse",
+           family = "Lovegren",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "jlovegren@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: Convert Fortran Unformatted I/O format POST files to/from R matrix. Convert 1-hr SO2 NAAQS Design value for linear combination of matrices.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
