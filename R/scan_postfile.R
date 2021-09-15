@@ -8,8 +8,6 @@
 #' @return matrix
 #' @export
 function(f){
-require(lubridate)
-require(stringr)
 rewind <- function(fp) seek(fp,0)
 fp <- file(f,open="rb",raw=TRUE)
 on.exit(close(fp))

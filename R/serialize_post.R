@@ -9,8 +9,6 @@
 #' @return logical
 #' @export
 function( mat , fname , srcgrp ) {
-require(purrr)
-require(magrittr)
 nhr <- dim(mat)[1]
 nrcp <- dim(mat)[2]
 u <- attr(mat,'hrbaseline') +hours(1:nhr)

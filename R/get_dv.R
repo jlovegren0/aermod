@@ -5,7 +5,6 @@
 #' @return double
 #' @export
 function(mat,diag=FALSE){
-	require(tidyr)
 	hrbaseline <- attr(mat,'hrbaseline')
 	nhr <- dim(mat)[1]
 	receps <- paste0("V",1:dim(mat)[2])
