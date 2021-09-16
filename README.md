@@ -24,5 +24,8 @@ devtools::install_github("jlovegren0/aermod")
 
 ``` r
 library(aermod)
-## basic example code
+#UIM_STK1 <- scan_postfile('STK1.bin')
+#UIM_STK2 <- scan_postfile('STK2.bin')
+#BACKGROUND <- scan_postfile('BACKGROUND.bin')
+#purrr::map_dbl( seq(100,500,100) , ~ 500*UIM_STK + . * UIM_STK2 + BACKGROUND )
 ```

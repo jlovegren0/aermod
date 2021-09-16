@@ -9,24 +9,24 @@ get_dv <- function(mat,diag=FALSE){
 	hrbaseline <- attr(mat,'hrbaseline')
 	nhr <- dim(mat)[1]
 	receps <- paste0("V",1:dim(mat)[2])
-tb <- mat %>% as.data.frame %>% as_tibble %>%
-	mutate( hr = (hrbaseline + hours(1:nhr))) %>%
-	mutate( dy = as_date(floor_date(hr,'days'))) %>%
-	mutate( yr = as.integer(year(floor_date(hr,'years'))) ) %>%
-	select( hr,dy,yr,all_of(receps)) %>%
-	pivot_longer(all_of(receps)) %>% rename(recep=name,conc=value) %>%
-	group_by(yr,dy,recep) %>%
-	summarize( day_hi = max(conc) ) %>%
-	ungroup %>%
-	group_by(recep,yr) %>%
-	slice_max(day_hi,n=4)  
+tb <- mat %>% as.data.frame %>% tibble::as_tibble %>%
+	dplyr::mutate( `hr` = (hrbaseline + lubridate::hours(1:nhr))) %>%
+	dplyr::mutate( `dy` = lubridate::as_date(lubridate::floor_date(`hr`,'days'))) %>%
+	dplyr::mutate( `yr` = as.integer(lubridate::year(lubridate::floor_date(`hr`,'years'))) ) %>%
+	dplyr::select( `hr`,`dy`,`yr`,tidyselect::all_of(receps)) %>%
+	tidyr::pivot_longer(tidyselect::all_of(receps)) %>% dplyr::rename(`recep`=`name`,`conc`=`value`) %>%
+	dplyr::group_by(`yr`,`dy`,`recep`) %>%
+	dplyr::summarize( `day_hi` = max(`conc`) ) %>%
+	dplyr::ungroup %>%
+	dplyr::group_by(`recep`,`yr`) %>%
+	dplyr::slice_max(`day_hi`,n=4)  
     if ( diag ) return(tb)
-tb %<>% slice_min(day_hi) %>%  
-    ungroup %>%
-	group_by(recep) %>%
-	summarize( dv = mean(day_hi) ) %>%
-	ungroup %>%
-	summarize(DV=max(dv)) %>% pull(DV) %>%
+tb %<>% dplyr::slice_min(`day_hi`) %>%  
+    dplyr::ungroup %>%
+	dplyr::group_by(`recep`) %>%
+	dplyr::summarize( `dv` = mean(`day_hi`) ) %>%
+	dplyr::ungroup %>%
+	dplyr::summarize(`DV`=max(`dv`)) %>% dplyr::pull(`DV`) %>%
 	suppressMessages
 return(tb)}
 

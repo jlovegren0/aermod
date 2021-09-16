@@ -7,6 +7,8 @@
 #' @name scan_postfile
 #' @param f character
 #' @return matrix
+#' @importFrom magrittr %>%
+#' @importFrom magrittr %<>%
 #' @export
 scan_postfile <- function(f){
 rewind <- function(fp) seek(fp,0)
@@ -29,7 +31,7 @@ for ( hh in 1:nhrs )
 	seek(fp,where=4,origin="current")
 }
 res <- matrix( container , ncol = nc , byrow=TRUE)
-attr(res,'srcgrp') <- str_trim(srcgrp)
-attr(res,'hrbaseline') <- ymd_h(str_glue('20{hr}')) - hours(2)
+attr(res,'srcgrp') <- stringr::str_trim(srcgrp)
+attr(res,'hrbaseline') <- lubridate::ymd_h(stringr::str_glue('20{hr}')) - lubridate::hours(2)
 return(res)
 }

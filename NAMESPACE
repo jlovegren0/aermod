@@ -3,3 +3,5 @@
 export(get_dv)
 export(scan_postfile)
 export(serialize_post)
+importFrom(magrittr,"%<>%")
+importFrom(magrittr,"%>%")
