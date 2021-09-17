@@ -13,6 +13,9 @@ application is to generate a POST file for a unit run for each of
 several sources, and use R matrix operations to scale, add, and
 substitute rows.
 
+Generate Monte Carlo runs where hours of operation are randomly turned
+on/off for a source.
+
 ## Installation
 
 ``` r
