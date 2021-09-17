@@ -40,5 +40,13 @@ library(aermod)
 #UIM_STK2 <- scan_postfile('STK2.bin')
 #BACKGROUND <- scan_postfile('BACKGROUND.bin')
 #purrr::map_dbl( seq(100,500,100) , ~ 500*UIM_STK + . * UIM_STK2 + BACKGROUND )
+#
+# Generate 72 hours per year of random operation for calendar years 2016--2020
+# (the default year span).
+hrs_rand(yrspan=2016:2020,nblock=72,blocklen=1)
+
+# Generate one block per year of 20 consecutive operating hours, 
+# subject to a restriction that blocks must be 365 days apart (which_filter=2).
+hrs_rand(nblock=1,blocklen=20,which_filter=2)
 ```
 
