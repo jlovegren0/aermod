@@ -8,6 +8,8 @@ get_dv(mat, diag = FALSE)
 }
 \arguments{
 \item{mat}{An impact matrix, typically a linear combination of impact matrices, which may be the result of a Monte Carlo simulation.}
+
+\item{diag}{Do not report full calculation. Instead, output a tibble giving the top four daily highs at each receptor x year.}
 }
 \value{
 A double corresponding to the calculated design value.
@@ -17,6 +19,7 @@ Calculate the 2010 SO2 NAAQS design value for an impact matrix. The impact matri
 }
 \details{
 Per EPA's 2014 guidance (pp. A-24--A-25), the calculation is carried out as follows:
+
 l. At each receptor, for each hour of the modeled period, calculate a total concentration
 across all sources including backgro1md concentrations if applicable. This can be done in
 AERMOD using SRCGROUP ALL or by adding individual source groups outside of
@@ -32,14 +35,8 @@ meteorological data, this results in five 99th percentile concentrations at each
 \item Average the 99th percentile (or 4th highest) concentrations across the modeled years to
 obtain a design value at each receptor.
 \item Modeled source contributions to a NAAQS violation can be determined by analyzing the
-hourly concentrations from the individual source groups POSTPILES corresponding to
+hourly concentrations from the individual source groups POSTFILES corresponding to
 the same hour as the 4th daily maximmn 1-hour concentration from each year. See 75 FR
-at 35540. For example, a receptor has a 5-year average design value of 200.8 mg/m3 (or
-approximately 77 ppb) and AERMOD was modeled for the period January l, 2005
-through December 31, 2009 for four source groups. From the AERMOD output, the user
-can determine the date of the 4111 highest daily maximum 1-hour concentrations that are
-used to calculate the 5-year average design value. Table 1 shows the 4th highest daily
-maximum 1-hour concentrations for each year and associated dates that are used in the
-design value calculation.
+at 35540.
 }
 }
