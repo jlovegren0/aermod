@@ -44,10 +44,11 @@ tb <- mat %>% as.data.frame %>% tibble::as_tibble() %>%
 	dplyr::group_by(`yr`,`dy`,`recep`) %>%
 	dplyr::summarize( `day_hi` = max(`conc`) ) %>%
 	dplyr::ungroup() %>%
-	dplyr::group_by(`recep`,`yr`) %>%
-	dplyr::slice_max(`day_hi`,n=4)  
+	dplyr::group_by(`recep`,`yr`) 
     if ( diag ) return(tb)
-tb %<>% dplyr::slice_min(`day_hi`) %>%  
+tb %<>% 
+	dplyr::slice_max(`day_hi`,n=4)  
+    dplyr::slice_min(`day_hi`) %>%  
     dplyr::ungroup() %>%
 	dplyr::group_by(`recep`) %>%
 	dplyr::summarize( `dv` = mean(`day_hi`) ) %>%
