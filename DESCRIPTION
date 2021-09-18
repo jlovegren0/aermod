@@ -22,4 +22,6 @@ Imports:
     purrr,
     stringr,
     tidyselect,
-    tidyr
+    tidyr,
+    tibble,
+    lubridate

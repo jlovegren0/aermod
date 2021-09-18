@@ -36,7 +36,7 @@ meteorological data, this results in five 99th percentile concentrations at each
 obtain a design value at each receptor.
 \item Modeled source contributions to a NAAQS violation can be determined by analyzing the
 hourly concentrations from the individual source groups POSTFILES corresponding to
-the same hour as the 4th daily maximmn 1-hour concentration from each year. See 75 FR
+the same hour as the 4th daily maximum 1-hour concentration from each year. See 75 FR
 at 35540.
 }
 }
