@@ -3,6 +3,7 @@
 export(blend)
 export(get_dv)
 export(hrs_rand)
+export(make_simplan)
 export(scan_postfile)
 export(serialize_post)
 importFrom(magrittr,"%<>%")
