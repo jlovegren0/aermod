@@ -11,7 +11,8 @@
 blend <- function(src,indices,target)
 {
 	if (missing(target)){ target <- 0L * src }
-	target[indices,] <- src[indices,]
+	target[indices$hrlist,] <- src[indices$hrlist,]
+	target[indices$hrlist,] %<>% `*`(indices$elist)
 	attr(target,'hrs_inserted') <- indices
 	target
 }

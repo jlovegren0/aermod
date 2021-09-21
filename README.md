@@ -7,10 +7,10 @@
 
 <!-- badges: end -->
 
-Work with AERMOD unformatted binary POST files. Convert to/from R matrix
-format, and calculate design values for the 2010 SO2 NAAQS. A typical
-application is to generate a POST file for a unit run for each of
-several sources, and use R matrix operations to scale, add, and
+Work with AMS/EPA AERMOD unformatted binary POST files. Convert to/from
+R matrix format, and calculate design values for the 2010 SO2 NAAQS. A
+typical application is to generate a POST file for a unit run for each
+of several sources, and use R matrix operations to scale, add, and
 substitute rows.
 
 Generate Monte Carlo runs where hours of operation are randomly turned

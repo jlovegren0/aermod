@@ -9,6 +9,7 @@
 #' @param nblock Number of blocks of consecutive hours. 
 #' @param blocklen Number of hours in each block. Default is 1.
 #' @param units for \code{blocklen}, either \code{"hours"} (default) or \code{"days"}. Return value is always vector of hours.
+#' @param emis_scale , for binned randomized emission rates, a vector of emission scalars of length \code{blocklen}. Default is \code{1} (no binning).
 #' @param which_filter Integer specifying special filters on the random number generation. Default is 1 (no filter). 2 is case where nblock = 1 and blocks in successive years must be spaced at least 365 days apart.
 #' @return An integer vector of operating hours, which may be used to index rows in an impact matrix.
 #' @export
@@ -45,9 +46,8 @@ hrs_rand <- function(yrspan=2016L:2020L,
     if ( length(emis_scale) > 1 )
     {
     emscal <- unlist(purrr::map(1:length(yrspan),~sample(emis_scale)))
-    elist <- purrr::map( emscal, ~ rep(.,blocklen)) %>% unlist %>%
-        purrr::map( ~rep(.,anti_mag) ) %>% unlist 
+    elist <- rep(emscal,each=blocklen) %>% rep(each=anti_mag) 
     }
     else elist <- emis_scale
-    tibble(hrlist,elist)
+    tibble::tibble(hrlist,elist)
 }

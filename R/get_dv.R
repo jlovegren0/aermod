@@ -42,16 +42,16 @@ tb <- mat %>% as.data.frame %>% tibble::as_tibble() %>%
 	dplyr::select( `hr`,`dy`,`yr`,tidyselect::all_of(receps)) %>%
 	tidyr::pivot_longer(tidyselect::all_of(receps)) %>% dplyr::rename(`recep`=`name`,`conc`=`value`) %>%
 	dplyr::group_by(`yr`,`dy`,`recep`) %>%
-	dplyr::summarize( `day_hi` = max(`conc`) ) %>%
+	dplyr::summarize( day_hi = max(`conc`) ) %>%
 	dplyr::ungroup() %>%
 	dplyr::group_by(`recep`,`yr`) 
     if ( diag ) return(tb)
 tb %<>% 
-	dplyr::slice_max(`day_hi`,n=4)  
-    dplyr::slice_min(`day_hi`) %>%  
+	dplyr::slice_max(day_hi,n=4)  %>%
+    dplyr::slice_min(day_hi) %>%  
     dplyr::ungroup() %>%
 	dplyr::group_by(`recep`) %>%
-	dplyr::summarize( `dv` = mean(`day_hi`) ) %>%
+	dplyr::summarize( `dv` = mean(day_hi) ) %>%
 	dplyr::ungroup() %>%
 	dplyr::summarize(`DV`=max(`dv`)) %>% dplyr::pull(`DV`) %>%
 	suppressMessages

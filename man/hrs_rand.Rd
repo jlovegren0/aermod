@@ -4,7 +4,14 @@
 \alias{hrs_rand}
 \title{Generate random hours of operation}
 \usage{
-hrs_rand(yrspan = 2016L:2020L, nblock = 6L, blocklen = 1L, which_filter = 1L)
+hrs_rand(
+  yrspan = 2016L:2020L,
+  nblock = 6L,
+  blocklen = 1L,
+  which_filter = 1L,
+  units = c("hours", "days"),
+  emis_scale = 1
+)
 }
 \arguments{
 \item{yrspan}{Calendar years for which operating hours are to be generated. A numeric vector}
@@ -14,6 +21,10 @@ hrs_rand(yrspan = 2016L:2020L, nblock = 6L, blocklen = 1L, which_filter = 1L)
 \item{blocklen}{Number of hours in each block. Default is 1.}
 
 \item{which_filter}{Integer specifying special filters on the random number generation. Default is 1 (no filter). 2 is case where nblock = 1 and blocks in successive years must be spaced at least 365 days apart.}
+
+\item{units}{for \code{blocklen}, either \code{"hours"} (default) or \code{"days"}. Return value is always vector of hours.}
+
+\item{emis_scale}{, for binned randomized emission rates, a vector of emission scalars of length \code{blocklen}. Default is \code{1} (no binning).}
 }
 \value{
 An integer vector of operating hours, which may be used to index rows in an impact matrix.
