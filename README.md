@@ -18,6 +18,8 @@ corresponding to row indices of a unit impact matrix:
 
 ``` r
 #Convert some POST files (not provided) into impact matrices
+# If the POST file was generated on a machine with different endianness than your own,
+# supply endian="big" or endian="little" (endianness of the generating machine)
 UIM_STK1 <- scan_postfile('STK1.bin')
 UIM_STK2 <- scan_postfile('STK2.bin')
 BACKGROUND <- scan_postfile('BACKGROUND.bin')
