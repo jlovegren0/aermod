@@ -22,6 +22,12 @@ UIM_STK1 <- scan_postfile('STK1.bin')
 UIM_STK2 <- scan_postfile('STK2.bin')
 BACKGROUND <- scan_postfile('BACKGROUND.bin')
 
+#Verify number of hours x receptors in the converted POST file
+dim(UIM_STK1)
+
+#Get SO2 Design value associated with a static scenario (scaled as desired)
+get_dv(700 * UIM_STK1 + 100 * UIM_STK2 + BACKGROUND)
+
 #Create one or more simulation plans 
 simplan <- make_simplan(N_sim=100,nblock=21,blocklen=1,units="days")
 # 100 runs, each consisting of (21) 1-day blocks (coinciding with calendar days)
