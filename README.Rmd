@@ -58,6 +58,5 @@ devtools::install_github("jlovegren0/aermod")
 
 ```{r example}
 library(aermod)
-(simplan <- make_simplan(N_sim=3,nblock=21,blocklen=1,units="days"))
 ```
 
