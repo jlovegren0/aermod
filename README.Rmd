@@ -28,7 +28,7 @@ for a source. This is done by generating random hours corresponding to
 row indices of a unit impact matrix:
 
 ``` r
-#Convert some POST files (not provided) into R matrices
+#Convert some POST files (not provided) into impact matrices
 UIM_STK1 <- scan_postfile('STK1.bin')
 UIM_STK2 <- scan_postfile('STK2.bin')
 BACKGROUND <- scan_postfile('BACKGROUND.bin')
@@ -43,6 +43,10 @@ get_dv(700 * UIM_STK1 + 100 * UIM_STK2 + BACKGROUND)
 #well as the value of .Random.Seed that leads to their generation. To generate random hours
 # only, use hrs_rand to get a tibble of hours and emission scalars
 hrs_rand(nblock=20,blocklen=4,units="hours")
+
+#The blend function creates an impact matrix consisting of specified rows from the source matrix
+#inserted into the target matrix (which is a zero matrix by default)
+blend(U_STK1, hrs_rand(nblock=20,blocklen=4,units="hours"), UIM_STK2)
 
 #Create one or more simulation plans 
 simplan <- make_simplan(N_sim=100,nblock=21,blocklen=1,units="days")
