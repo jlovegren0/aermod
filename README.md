@@ -28,6 +28,11 @@ dim(UIM_STK1)
 #Get SO2 Design value associated with a static scenario (scaled as desired)
 get_dv(700 * UIM_STK1 + 100 * UIM_STK2 + BACKGROUND)
 
+#A simulation plan consists of a set of randomly chosen hours (and emission rates, if desired), as
+#well as the value of .Random.Seed that leads to their generation. To generate random hours
+# only, use hrs_rand to get a tibble of hours and emission scalars
+hrs_rand(nblock=20,blocklen=4,units="hours")
+
 #Create one or more simulation plans 
 simplan <- make_simplan(N_sim=100,nblock=21,blocklen=1,units="days")
 # 100 runs, each consisting of (21) 1-day blocks (coinciding with calendar days)
