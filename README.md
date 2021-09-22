@@ -50,6 +50,12 @@ one_sim <- function(i) get_dv( blend( U_STK1 , simplan1[[i]]$hrs ) )
 
 purrr::map_dbl( 1:100 , ~ one_sim(.) )
 # run it 100 times
+
+#For larger simulation sets, use parallel computation
+future::plan('multisession')
+simplan3 <- make_simplan(N_sim=10000,nblock=5,blocklen=1,units="days",emis_scale=c(750,750,200,200,200))
+one_sim <- function(i) get_dv( blend( U_STK1 , simplan3[[i]]$hrs ) )
+furrr::future_map_dbl( 1:10000 , ~ one_sim(.),.options=furrr::future_options(seed=TRUE) )
 ```
 
 ## Installation
