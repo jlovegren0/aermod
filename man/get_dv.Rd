@@ -19,14 +19,13 @@ Calculate the 2010 SO2 NAAQS design value for an impact matrix. The impact matri
 }
 \details{
 Per EPA's 2014 guidance (pp. A-24--A-25), the calculation is carried out as follows:
-
-l. At each receptor, for each hour of the modeled period, calculate a total concentration
+\enumerate{
+\item At each receptor, for each hour of the modeled period, calculate a total concentration
 across all sources including backgro1md concentrations if applicable. This can be done in
 AERMOD using SRCGROUP ALL or by adding individual source groups outside of
 AERMOD, using hourly POSTFILEs. If the user is totaling the concentrations outside of
 AERMOD, the source groups used in the calculations need to be mutually exclusive, i.e.
 no one source should be in multiple source groups.
-\enumerate{
 \item From the total concentrations calculated in step 1, obtain the 1-hr maximum
 concentration at each receptor for each modeled day.
 \item From the output of step 2, for each year modeled, calculate the 99th percentile (4th

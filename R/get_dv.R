@@ -4,7 +4,7 @@
 #' 
 #' Per EPA's 2014 guidance (pp. A-24--A-25), the calculation is carried out as follows:
 #'
-#' l. At each receptor, for each hour of the modeled period, calculate a total concentration
+#' 1. At each receptor, for each hour of the modeled period, calculate a total concentration
 #' across all sources including backgro1md concentrations if applicable. This can be done in
 #' AERMOD using SRCGROUP ALL or by adding individual source groups outside of
 #' AERMOD, using hourly POSTFILEs. If the user is totaling the concentrations outside of
