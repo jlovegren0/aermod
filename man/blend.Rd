@@ -17,5 +17,10 @@ blend(src, indices, target)
 Blended matrix. Has an attribute listing all of the hours for which a substitution was made. Existing attributes are carried over from \code{target}.
 }
 \description{
-The rows from \code{src} replace corresponding rows in \code{target}
+The \code{blend} operation inserts rows from a source impact matrix (typically corresponding to an impact matrix for a non-continuous source)
+into a target impact matrix (typically corresponding to a continuous source that does not operate at the same time as the non-continuous source).
+Blend also generates an impact matrix which is a zero matrix of the same dimensions as the source matrix, except for the selected rows.
+}
+\details{
+Indices are intended to be a set of randomly generated operating hours created by \code{hrs_rand} (which may be created via \code{make_simplan}).
 }

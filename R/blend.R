@@ -1,6 +1,10 @@
 #' Blend two impact matrices together.
 #'
-#' The rows from \code{src} replace corresponding rows in \code{target}
+#' The \code{blend} operation inserts rows from a source impact matrix (typically corresponding to an impact matrix for a non-continuous source)
+#' into a target impact matrix (typically corresponding to a continuous source that does not operate at the same time as the non-continuous source).
+#' Blend also generates an impact matrix which is a zero matrix of the same dimensions as the source matrix, except for the selected rows.
+#'
+#' Indices are intended to be a set of randomly generated operating hours created by \code{hrs_rand} (which may be created via \code{make_simplan}).
 #'
 #' @name blend
 #' @param src Matrix corresponding to source group for which intermittent operation is simulated.
