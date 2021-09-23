@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jlovegren@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Convert Fortran Unformatted I/O format POST files to/from R matrix. Convert 1-hr SO2 NAAQS Design value for linear combination of matrices.
+Description: Convert Fortran Unformatted I/O format POST files to/from R matrix. Convert 1-hr SO2 NAAQS Design value for linear combination of matrices. Developed for running Monte Carlo simulations for SO2 SIP Attainment Demonstration Modeling.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
