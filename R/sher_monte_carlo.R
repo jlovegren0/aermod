@@ -15,35 +15,35 @@ sher_monte_carlo <- function(lambda,nhr,nsim=10000L){
 		starting_idxs <- 1 : length(x)
 		x <- c( x , x[1:( blocklen - 1)] )
 		p_tbl <- purrr::map_int( starting_idxs , function(.x) sum( x[ .x : ( .x + blocklen - 1 ) ] ) ) %>% 
-			tibble( nexc = . ) %>% group_by(nexc) 
-		res <- p_tbl %>% tally 
+			tibble::tibble( nexc = . ) %>% dplyr::group_by(nexc) 
+		res <- p_tbl %>% dplyr::tally()
 		names(res)[2] <- paste0('n_',blocklen)
 		res
 	}
 	ptbl <- function( x = "e2" )
 	{
-		probs <- tibble( nexc = 0:24 , dummy = 0 ) %>%
-		left_join( SMPL( pull(exc_tbl,x) ,blocklen = 1L) ) %>% 
-		left_join( SMPL( pull(exc_tbl,x) ,blocklen = 2L) ) %>% 
-		left_join( SMPL( pull(exc_tbl,x) ,blocklen = 3L) ) %>% 
-		left_join( SMPL( pull(exc_tbl,x) ,blocklen = 4L) ) %>% 
-		left_join( SMPL( pull(exc_tbl,x) ,blocklen = 6L) ) %>% 
-		left_join( SMPL( pull(exc_tbl,x) ,blocklen = 12L) ) %>% 
-		left_join( SMPL( pull(exc_tbl,x) ,blocklen = 24L) ) %>% select(-dummy) %>% suppressMessages
+		probs <- tibble::tibble( nexc = 0:24 , dummy = 0 ) %>%
+		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 1L) ) %>% 
+		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 2L) ) %>% 
+		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 3L) ) %>% 
+		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 4L) ) %>% 
+		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 6L) ) %>% 
+		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 12L) ) %>% 
+		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 24L) ) %>% dplyr::select(-dummy) %>% suppressMessages
 		probs[ is.na(probs) ] <- 0L
-		probs %>% mutate( lval = x ) %>% select( 1 , 9 , 2:8 )
+		probs %>% dplyr::mutate( lval = x ) %>% select( 1 , 9 , 2:8 )
 	}
-	pbz <- bind_rows( ptbl("e1"), ptbl( "e2" ) , ptbl( "e4" ), ptbl("e10") )
+	pbz <- dplyr::bind_rows( ptbl("e1"), ptbl( "e2" ) , ptbl( "e4" ), ptbl("e10") )
 	nxc <- function(lx,blocksz){
-		((0:24) * rmultinom( nsim , size = floor( nhr / blocksz ), pull(dplyr::filter(pbz,lval==lx),paste0('n_',blocksz)))) %>%
+		((0:24) * stats::rmultinom( nsim , size = floor( nhr / blocksz ), dplyr::pull(dplyr::filter(pbz,lval==lx),paste0('n_',blocksz)))) %>%
 			colSums %>% quantile( 0.999 ) %>% as.integer
 	}
-	res_frame <- tibble(dummy=1,lx=c('e1','e2','e4','e10')) %>% 
-		left_join(tibble(dummy=1,blocksz=c(1,2,3,4,6,12,24))) %>%
-		select(-dummy) %>% mutate( nexc = 0 ) %>% suppressMessages
+	res_frame <- tibble::tibble(dummy=1,lx=c('e1','e2','e4','e10')) %>% 
+		dplyr::left_join(tibble::tibble(dummy=1,blocksz=c(1,2,3,4,6,12,24))) %>%
+		dplyr::select(-dummy) %>% dplyr::mutate( nexc = 0 ) %>% suppressMessages
 	res_frame$nexc <- purrr::map_int( 1:nrow(res_frame) , ~ nxc( res_frame$lx[.] , res_frame$blocksz[.] ) )
-	res_frame %<>% pivot_wider( names_from = lx , values_from = nexc )
-	worst <- res_frame %>% summarize( L1 = max(e1) , L2 = max(e2) , L4 = max(e4) , L10 = max(e10) )
+	res_frame %<>% dplyr::pivot_wider( names_from = lx , values_from = nexc )
+	worst <- res_frame %>% dplyr::summarize( L1 = max(e1) , L2 = max(e2) , L4 = max(e4) , L10 = max(e10) )
 	list( nhr = nhr , results = res_frame , worst_lambda = worst)
 }
 
