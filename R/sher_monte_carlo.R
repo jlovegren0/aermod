@@ -42,7 +42,7 @@ sher_monte_carlo <- function(lambda,nhr,nsim=10000L){
 		dplyr::left_join(tibble::tibble(dummy=1,blocksz=c(1,2,3,4,6,12,24))) %>%
 		dplyr::select(-dummy) %>% dplyr::mutate( nexc = 0 ) %>% suppressMessages
 	res_frame$nexc <- purrr::map_int( 1:nrow(res_frame) , ~ nxc( res_frame$lx[.] , res_frame$blocksz[.] ) )
-	res_frame %<>% dplyr::pivot_wider( names_from = lx , values_from = nexc )
+	res_frame %<>% tidyr::pivot_wider( names_from = lx , values_from = nexc )
 	worst <- res_frame %>% dplyr::summarize( L1 = max(e1) , L2 = max(e2) , L4 = max(e4) , L10 = max(e10) )
 	list( nhr = nhr , results = res_frame , worst_lambda = worst)
 }
