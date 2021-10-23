@@ -1,8 +1,5 @@
 #' Calculate 2010 SO2 design values using base functions only
 #' 
-#' Generates various statistics used in TCEQ Toxicology Tier III RFC reviews.
-#' If the impact matrix covers more than one year of met data, only the first year is used.
-#'
 #' @name fast_so2_dv
 #' @param mat An impact matrix over five years of met data
 #' @param sumfn Use \code{max} for max DV at any receptor, default is \code{identity} (DV at each receptor, in order). 
@@ -12,7 +9,7 @@ fast_so2_dv <- function(mat,sumfn=identity){
     hrbaseline <- attr(mat,'hrbaseline')
     y1 <- as.integer(lubridate::year(hrbaseline + lubridate::hours(1)))
     y2 <- y1 + 4
-    daylens <- 365L + leap_year(y1:y2)
+    daylens <- 365L + lubridate::leap_year(y1:y2)
     nday <- sum( daylens )
 r1 <- purrr::map_dbl( 1:(length(mat)/24) , function(.x) max( mat[  ( 24 * (.x - 1) + 1 ): (24 * .x) ] ) ) %>%
     matrix(nrow=nday)

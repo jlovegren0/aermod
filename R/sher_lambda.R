@@ -5,8 +5,10 @@
 #'
 #' @name sher_lambda
 #' @param mat An impact matrix over one year of met data
-#' @param an esl against which to report lambda values
+#' @param esl an esl against which to report lambda values
 #' @return A list of various data tables useful for running Monte Carlo simulations, or reporting unadjusted lambda values.
+#' @importFrom stats quantile
+#' @importFrom utils head
 #' @export
 sher_lambda <- function(mat,esl){
 	hrbaseline <- attr(mat,'hrbaseline')

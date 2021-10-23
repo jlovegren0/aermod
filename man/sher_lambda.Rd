@@ -9,7 +9,7 @@ sher_lambda(mat, esl)
 \arguments{
 \item{mat}{An impact matrix over one year of met data}
 
-\item{an}{esl against which to report lambda values}
+\item{esl}{an esl against which to report lambda values}
 }
 \value{
 A list of various data tables useful for running Monte Carlo simulations, or reporting unadjusted lambda values.

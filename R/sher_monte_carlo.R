@@ -23,15 +23,15 @@ sher_monte_carlo <- function(lambda,nhr,nsim=10000L){
 	ptbl <- function( x = "e2" )
 	{
 		probs <- tibble::tibble( nexc = 0:24 , dummy = 0 ) %>%
-		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 1L) ) %>% 
-		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 2L) ) %>% 
-		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 3L) ) %>% 
-		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 4L) ) %>% 
-		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 6L) ) %>% 
-		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 12L) ) %>% 
-		dplyr::left_join( SMPL( pull(exc_tbl,x) ,blocklen = 24L) ) %>% dplyr::select(-dummy) %>% suppressMessages
+		dplyr::left_join( SMPL( dplyr::pull(exc_tbl,x) ,blocklen = 1L) ) %>% 
+		dplyr::left_join( SMPL( dplyr::pull(exc_tbl,x) ,blocklen = 2L) ) %>% 
+		dplyr::left_join( SMPL( dplyr::pull(exc_tbl,x) ,blocklen = 3L) ) %>% 
+		dplyr::left_join( SMPL( dplyr::pull(exc_tbl,x) ,blocklen = 4L) ) %>% 
+		dplyr::left_join( SMPL( dplyr::pull(exc_tbl,x) ,blocklen = 6L) ) %>% 
+		dplyr::left_join( SMPL( dplyr::pull(exc_tbl,x) ,blocklen = 12L) ) %>% 
+		dplyr::left_join( SMPL( dplyr::pull(exc_tbl,x) ,blocklen = 24L) ) %>% dplyr::select(-dummy) %>% suppressMessages
 		probs[ is.na(probs) ] <- 0L
-		probs %>% dplyr::mutate( lval = x ) %>% select( 1 , 9 , 2:8 )
+		probs %>% dplyr::mutate( lval = x ) %>% dplyr::select( 1 , 9 , 2:8 )
 	}
 	pbz <- dplyr::bind_rows( ptbl("e1"), ptbl( "e2" ) , ptbl( "e4" ), ptbl("e10") )
 	nxc <- function(lx,blocksz){
