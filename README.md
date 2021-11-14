@@ -10,7 +10,7 @@
 This is a post-processor for AMS/EPA AERMOD. It works with unformatted
 binary POSTFILEs. Its main application is to enable the use of Monte
 Carlo methods for determining the ambient impacts of non-continuous
-sources in SO2 attainment demonstration modeling.
+sources in SO<sub>2</sub> attainment demonstration modeling.
 
 ## Monte Carlo Methods in Regulatory Dispersion Modeling
 
@@ -138,7 +138,11 @@ calculation function, is called repeatedly to generate the result set:
 ``` r
 future::plan('multisession')
 tic()
-results <- furrr::map_df( 1L:1000L , function (.x) fast_so2_dv( blend(UIM_STK1, sim.1[[ .x ]]$hrs) + blend(UIM_STK2, sim.2[[ .x ]]$hrs ) + BACKGROUND ), .options=furrr::future_options(seed=TRUE) )
+results <- furrr::map_df( 1L:1000L , 
+    function (.x) fast_so2_dv( blend(UIM_STK1, sim.1[[ .x ]]$hrs) + 
+            blend(UIM_STK2, sim.2[[ .x ]]$hrs ) + 
+            BACKGROUND ), 
+    .options=furrr::future_options(seed=TRUE) )
 toc()
 ```
 
