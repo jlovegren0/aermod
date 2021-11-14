@@ -27,8 +27,10 @@ SO<sub>2</sub> source that is authorized to operate during no more than
 than four calendar days in a given year. Considering a five-year
 meteorological database spanning 2016–2020, the number of unique ways of
 assigning the hours of operation to hours of the meteorological database
-is
-\[{366\choose 4}^2{365\choose 4}^3 = 208226519296227450624822934282939747178381312\]
+is   
+![{366\\choose 4}^2{365\\choose 4}^3
+= 208226519296227450624822934282939747178381312](https://latex.codecogs.com/png.latex?%7B366%5Cchoose%204%7D%5E2%7B365%5Cchoose%204%7D%5E3%20%3D%20208226519296227450624822934282939747178381312
+"{366\\choose 4}^2{365\\choose 4}^3 = 208226519296227450624822934282939747178381312")  
 each of which is assumed to be equally probable. While it is not
 possible to model all scenarios, it is problematic to completely
 disregard the 4 day/yr restriction in the modeling (i.e., by modeling
@@ -55,18 +57,18 @@ simulation.
 
 ## Implementation Details
 
-Running a Monte Carlo simulation consists of three steps.
+Running a Monte Carlo simulation consists of four steps.
 
-1.  First, binary POSTFILEs files are converted into impact matrices.
-2.  Second, a simulation plan is generated, consisting of randomly
-    selected hours of operation for each simulation trial3. Third, Monte
-    Carlo trials are run, each trial consisting of two steps:
+1.  Binary POSTFILEs files are converted into impact matrices.
+2.  A simulation plan is generated, consisting of randomly selected
+    hours of operation for each simulation trial
+3.  Monte Carlo trials are run, each trial consisting of two steps:
       - Impact matrices corresponding to non-continuous sources are
         altered so that concentration corresponding to a non-operating
         hours is zero.
       - All relevant impact matrices are summed, and a design value for
         the total impact matrix is calculated.
-3.  Results are evaluated following specified criteria.
+4.  The desired statistics are calculated on the result set.
 
 <!-- end list -->
 
