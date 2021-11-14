@@ -12,7 +12,7 @@ binary POSTFILEs. Its main application is to enable the use of Monte
 Carlo methods for determining the ambient impacts of non-continuous
 sources in SO2 attainment demonstration modeling.
 
-# Monte Carlo Methods in Regulatory Dispersion Modeling
+## Monte Carlo Methods in Regulatory Dispersion Modeling
 
 Built-in AERMOD algorithms permit the modeling of non-continuous sources
 with *fixed operating schedules* via the EMISFACT or HOUREMIS card: for
@@ -71,17 +71,22 @@ force approach, this package permits running 1000-1000000, random
 simulations in a reasonable amount of time, depending on the number of
 source groups and receptors considered.
 
-# Implementation Details
+## Implementation Details
 
-Running a Monte Carlo simulation consists of three steps. \* First,
-binary POSTFILEs files are converted into impact matrices. \* Second, a
-simulation plan is generated, consisting of randomly selected hours of
-operation for each simulation trial.\* Third, Monte Carlo trials are
-run, each trial consisting of two steps: + Impact matrices corresponding
-to non-continuous sources are altered so that concentration
-corresponding to a non-operating hours is zero. + All relevant impact
-matrices are summed, and a design value for the total impact matrix is
-calculated. \* Results are evaluated following specified criteria.
+Running a Monte Carlo simulation consists of three steps.
+
+1.  First, binary POSTFILEs files are converted into impact matrices.
+2.  Second, a simulation plan is generated, consisting of randomly
+    selected hours of operation for each simulation trial3. Third, Monte
+    Carlo trials are run, each trial consisting of two steps:
+      - Impact matrices corresponding to non-continuous sources are
+        altered so that concentration corresponding to a non-operating
+        hours is zero.
+      - All relevant impact matrices are summed, and a design value for
+        the total impact matrix is calculated.
+3.  Results are evaluated following specified criteria.
+
+<!-- end list -->
 
 ``` r
 #Convert some POST files (not provided) into impact matrices
