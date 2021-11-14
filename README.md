@@ -12,6 +12,8 @@ binary POSTFILEs. Its main application is to enable the use of Monte
 Carlo methods for determining the ambient impacts of non-continuous
 sources in SO2 attainment demonstration modeling.
 
+# Monte Carlo Methods in Regulatory AERMOD Applications
+
 Built-in AERMOD algorithms permit the modeling of non-continuous sources
 with *fixed operating schedules* via the EMISFACT or HOUREMIS card: for
 example, a source that only operates during daytime hours or does not

@@ -20,6 +20,9 @@ knitr::opts_chunk$set(
 
 This is a post-processor for AMS/EPA AERMOD.  It works with unformatted binary POSTFILEs. Its main application is to enable the use of Monte Carlo methods for determining the ambient impacts of non-continuous sources in SO2 attainment demonstration modeling.
 
+Monte Carlo Methods in Regulatory AERMOD Applications
+===
+
 Built-in AERMOD algorithms permit the modeling of non-continuous sources with *fixed operating schedules* via the EMISFACT or HOUREMIS card: for example, a source that only operates during daytime hours or does not operate during the winter months. Sources that are subject to a limit on the total number of hours or days of operation, but do not operate to a fixed schedule, however, cannot be accommodated with AERMOD's built-in algorithms.
 
 To illustrate the problem, consider the example of a hypothetical emission point that is authorized to operate during no more than than four calendar days in a given year (for example, a bypass stack upstream of an acid plant at a non-ferrous ore roasting operation that emits roaster gases during shutdown of the acid plant). Considering a five-year meteorological database spanning 2016--2020, the number of unique ways of assigning the hours of operation to hours of the meteorological database is 208226519296227450624822934282939747178381312. It is clearly impossible to evaluate each of these scenarios in order to determine how many of them would result in a violation. It would also be unreasonable to completely disregard the 4 day/yr restriction in the modeling (i.e., by modeling the source as though it operated continuously), if it would result in different control requirements than those dictated by a more accurate evaluation.
