@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 This is a post-processor for AMS/EPA AERMOD.  It works with unformatted binary POSTFILEs. Its main application is to enable the use of Monte Carlo methods for determining the ambient impacts of non-continuous sources in SO2 attainment demonstration modeling.
 
-Monte Carlo Methods in Regulatory AERMOD Applications
+Monte Carlo Methods in Regulatory Dispersion Modeling
 ===
 
 Built-in AERMOD algorithms permit the modeling of non-continuous sources with *fixed operating schedules* via the EMISFACT or HOUREMIS card: for example, a source that only operates during daytime hours or does not operate during the winter months. Sources that are subject to a limit on the total number of hours or days of operation, but do not operate to a fixed schedule, however, cannot be accommodated with AERMOD's built-in algorithms.
@@ -36,6 +36,17 @@ Now suppose that it *were* possible to evaluate all of the possible operating sc
 Before discussing the details of how to use this package, it can fairly be asked whether a specialized post-processor is necessary to conduct a Monte Carlo analysis. For example, it might be thought appropriate to conduct the same type of analysis using a "brute force" approach: construct a number of operating schedules thought to representative; run AERMOD for each of the selected schedules, using the EMISFACT or HOUREMIS cards; and then tabulate the design value for each AERMOD run. There are two basic problems with such an approach: first, it is not possible to ensure that a representative sample is chosen if a random number generator is not used; and second, too few simulations can be managed if AERMOD has to be re-run for each simulation.
 
 While around 100, non-random simulations can be managed with a brute force approach, this package permits running 1000-1000000, random simulations in a reasonable amount of time, depending on the number of source groups and receptors considered.
+
+Implementation Details
+===
+
+Running a Monte Carlo simulation consists of three steps. 
+* First, binary POSTFILEs files are converted into impact matrices. 
+* Second, a simulation plan is generated, consisting of randomly selected hours of operation for each simulation trial.* Third, Monte Carlo trials are run, each trial consisting of two steps:
+    + Impact matrices corresponding to non-continuous sources are altered so that concentration corresponding to a non-operating hours is zero.
+    + All relevant impact matrices are summed, and a design value for the total impact matrix is calculated.
+* Results are evaluated following specified criteria.
+
 
 ``` r
 #Convert some POST files (not provided) into impact matrices
