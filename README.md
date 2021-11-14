@@ -28,7 +28,7 @@ than four calendar days in a given year. Considering a five-year
 meteorological database spanning 2016–2020, the number of unique ways of
 assigning the hours of operation to hours of the meteorological database
 is
-\({366\choose 4}^2{365\choose 4}^3 = 208226519296227450624822934282939747178381312\),
+\[{366\choose 4}^2{365\choose 4}^3 = 208226519296227450624822934282939747178381312\]
 each of which is assumed to be equally probable. While it is not
 possible to model all scenarios, it is problematic to completely
 disregard the 4 day/yr restriction in the modeling (i.e., by modeling
