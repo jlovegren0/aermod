@@ -36,38 +36,22 @@ the source as though it operated continuously).
 
 If it **were** possible to evaluate all of the possible operating
 schedules, the aim in doing so so would be to determine the distribution
-function of the resulting design values. whether the proportion
-resulting in a modeled violation (i.e., the probability of violation) is
-tolerably low. But the probability of a particular outcome can be
-estimated statistically, Since an indication of the probability of
-violation is the desired result, this quantity *can* be estimated by
-considering a representative sample of the possible operating schedules.
-Doing so is the purpose of a Monte Carlo analysis, which involves three
-basic steps:
+function of the resulting design values and compute the desired
+statistics on it. Of course, it is possible to do this using standard
+statistical methods on a representative sample of the possible operating
+schedules. Monte Carlo methods are used to generate a sufficient number
+of random outcomes such that the desired statistics can be computed.
 
-1.  Use a random number generator to simulate a representative number
-    (N) of possible operating schedules.
-2.  Calculate the design value associated with each of the N
-    simulations.
-3.  Based on the simulation results, determine whether the probability
-    of violation is de minimis.
-
-Before discussing the details of how to use this package, it can fairly
-be asked whether a specialized post-processor is necessary to conduct a
-Monte Carlo analysis. For example, it might be thought appropriate to
-conduct the same type of analysis using a “brute force” approach:
-construct a number of operating schedules thought to representative; run
-AERMOD for each of the selected schedules, using the EMISFACT or
-HOUREMIS cards; and then tabulate the design value for each AERMOD run.
-There are two basic problems with such an approach: first, it is not
-possible to ensure that a representative sample is chosen if a random
-number generator is not used; and second, too few simulations can be
-managed if AERMOD has to be re-run for each simulation.
-
-While around 100, non-random simulations can be managed with a brute
-force approach, this package permits running 1000-1000000, random
-simulations in a reasonable amount of time, depending on the number of
-source groups and receptors considered.
+It can fairly be asked whether a specialized post-processor is necessary
+to conduct a Monte Carlo analysis. After all, the same type of analysis
+can be performed using a “brute force” approach: construct a number of
+operating schedules thought to be representative; run AERMOD for each of
+the selected schedules, using the EMISFACT or HOUREMIS cards; and then
+tabulate the design value for each AERMOD run. There are two basic
+problems with such an approach: first, the samples will not be random;
+and second, the maximum number of simulations is constrained by the
+computing overhead associated with re-running AERMOD for each
+simulation.
 
 ## Implementation Details
 
