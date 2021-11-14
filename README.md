@@ -49,11 +49,14 @@ to conduct a Monte Carlo analysis. After all, the same type of analysis
 can be performed using a “brute force” approach: construct a number of
 operating schedules thought to be representative; run AERMOD for each of
 the selected schedules, using the EMISFACT or HOUREMIS cards; and then
-tabulate the design value for each AERMOD run. There are two basic
+tabulate the design value for each AERMOD run. There are three basic
 problems with such an approach: first, the samples will not be random;
-and second, the maximum number of simulations is constrained by the
+second, the maximum number of simulations is constrained by the
 computing overhead associated with re-running AERMOD for each
-simulation.
+simulation; and third, the results will not be reproducible.
+
+This package enables random, fast, and reproducible Monte Carlo
+simulations to be run for regulatory applications.
 
 ## Implementation Details
 
@@ -70,10 +73,15 @@ Running a Monte Carlo simulation consists of four steps.
         the total impact matrix is calculated.
 4.  The desired statistics are calculated on the result set.
 
-<!-- end list -->
+### Converting POSTFILEs to Impact Matrices
+
+AERMOD POSTFILEs are [FORTRAN 77 Unformattted
+I/O](https://docs.oracle.com/cd/E19957-01/805-4939/6j4m0vnc4/index.html)
+binary files whose structure is described in the AERMOD user’s guide.
+They are readily converted into R matrices.
 
 ``` r
-#Convert some POST files (not provided) into impact matrices
+#Convert some POST files  into impact matrices
 # If the POST file was generated on a machine with different endianness than your own,
 # supply endian="big" or endian="little" (endianness of the generating machine)
 UIM_STK1 <- scan_postfile('STK1.bin')
@@ -82,38 +90,56 @@ BACKGROUND <- scan_postfile('BACKGROUND.bin')
 
 #Verify number of hours x receptors in the converted POST file
 dim(UIM_STK1)
+```
 
-#Get SO2 Design value associated with a static scenario (scaled as desired)
+To avoid cluttering the global environment and to facilitate automatiion
+and memory management, it may be desirable to collect impact matrices in
+an environment:
+
+``` r
+all_impact_mats <- rlang::new_environment()
+c('STK1.bin','STK2.bin','BACKGROUND.bin') %>% purrr::walk( function(.x) all_impact_mats[[ .x ]] <- scan_postfile(.x) )
+```
+
+The package can be used to calculate SO<sub>2</sub> design values for
+deterministic runs, without running a Monte Carlo simulation. Note that
+the impact matrices can be scaled and added, so long as they are
+conformable.
+
+``` r
 get_dv(700 * UIM_STK1 + 100 * UIM_STK2 + BACKGROUND)
+```
 
-#A simulation plan consists of a set of randomly chosen hours (and emission rates, if desired), as
-#well as the value of .Random.Seed that leads to their generation. To generate random hours
-# only, use hrs_rand to get a tibble of hours and emission scalars
-hrs_rand(nblock=20,blocklen=4,units="hours")
+The functions `get_dv` and `fast_so2_dv` both calculate SO<sub>2</sub>
+design values. The former can produce more useful diagnostic output,
+while the latter is faster.
 
-#The blend function creates an impact matrix consisting of specified rows from the source matrix
-#inserted into the target matrix (which is a zero matrix by default)
-blend(U_STK1, hrs_rand(nblock=20,blocklen=4,units="hours"), UIM_STK2)
+### Making a Simulation Plan
 
-#Create one or more simulation plans 
-simplan <- make_simplan(N_sim=100,nblock=21,blocklen=1,units="days")
-# 100 runs, each consisting of (21) 1-day blocks (coinciding with calendar days)
-simplan2 <- make_simplan(N_sim=100,nblock=1,blocklen=168,units="hours")
-# 100 runs, each consisting of (1) 168-hour block
-simplan3 <- make_simplan(N_sim=100,nblock=5,blocklen=1,units="days",emis_scale=c(750,750,200,200,200))
-# 100 runs, each consisting of (5) 1-day blocks having binned emission rates of 750 lb/hr (2 days) and 200 lb/hr (3 days)
+A simulation plan is a list of the randomly chosen hours (and emission
+rates, if desired) for each simulation, as well as the value of
+.Random.Seed leads to the generated hours. The code below generates a
+simulation plan for 1000 simulations for two non-continuous sources: one
+will emit for four hours, twenty times per calendar year; while the
+other will emit for one calendar day, four times per calendar year.
 
-one_sim <- function(i) get_dv( blend( U_STK1 , simplan1[[i]]$hrs ) )
-#Define a function to run a single simulation
+``` r
+sim.1 <- make_simplan(N_sim=1000,nblock=20,blocklen=4,units="hours")
+sim.2 <- make_simplan(N_sim=1000,nblock=4,blocklen=1,units="days")
+```
 
-purrr::map_dbl( 1:100 , ~ one_sim(.) )
-# run it 100 times
+### Running the Monte Carlo Trials
 
-#For larger simulation sets, use parallel computation
+The `blend` function creates an impact matrix consisting of specified
+rows from the source matrix inserted into the target matrix (which is a
+zero matrix by default). This function, as well as the design value
+calculation function, is called repeatedly to generate the result set:
+
+``` r
 future::plan('multisession')
-simplan3 <- make_simplan(N_sim=10000,nblock=5,blocklen=1,units="days",emis_scale=c(750,750,200,200,200))
-one_sim <- function(i) get_dv( blend( U_STK1 , simplan3[[i]]$hrs ) )
-furrr::future_map_dbl( 1:10000 , ~ one_sim(.),.options=furrr::future_options(seed=TRUE) )
+tic()
+results <- furrr::map_df( 1L:1000L , function (.x) fast_so2_dv( blend(UIM_STK1, sim.1[[ .x ]]$hrs) + blend(UIM_STK2, sim.2[[ .x ]]$hrs ) + BACKGROUND ), .options=furrr::future_options(seed=TRUE) )
+toc()
 ```
 
 ## Installation
