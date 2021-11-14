@@ -27,11 +27,12 @@ SO<sub>2</sub> source that is authorized to operate during no more than
 than four calendar days in a given year. Considering a five-year
 meteorological database spanning 2016–2020, the number of unique ways of
 assigning the hours of operation to hours of the meteorological database
-is \(208226519296227450624822934282939747178381312\), each of which is
-assumed to be equally probable. While it is not possible to model all
-scenarios, it is problematic to completely disregard the 4 day/yr
-restriction in the modeling (i.e., by modeling the source as though it
-operated continuously).
+is
+\({366\choose 4}^2{365\choose 4}^3 = 208226519296227450624822934282939747178381312\),
+each of which is assumed to be equally probable. While it is not
+possible to model all scenarios, it is problematic to completely
+disregard the 4 day/yr restriction in the modeling (i.e., by modeling
+the source as though it operated continuously).
 
 If it **were** possible to evaluate all of the possible operating
 schedules, the aim in doing so so would be to determine the distribution
