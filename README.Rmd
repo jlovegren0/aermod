@@ -18,14 +18,21 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-Work with AMS/EPA AERMOD unformatted binary POST files. Convert to/from R matrix format,
-and calculate design values for the 2010 SO2 NAAQS. A typical application is
-to generate a POST file for a unit run for each of several sources, and use
-R matrix operations to scale, add, and substitute rows.
+This is a post-processor for AMS/EPA AERMOD.  It works with unformatted binary POSTFILEs. Its main application is to enable the use of Monte Carlo methods for determining the ambient impacts of non-continuous sources in SO2 attainment demonstration modeling.
 
-Generate Monte Carlo runs where hours of operation are randomly turned on/off
-for a source. This is done by generating random hours corresponding to
-row indices of a unit impact matrix:
+Built-in AERMOD algorithms permit the modeling of non-continuous sources with *fixed operating schedules* via the EMISFACT or HOUREMIS card: for example, a source that only operates during daytime hours or does not operate during the winter months. Sources that are subject to a limit on the total number of hours or days of operation, but do not operate to a fixed schedule, however, cannot be accommodated with AERMOD's built-in algorithms.
+
+To illustrate the problem, consider the example of a hypothetical emission point that is authorized to operate during no more than than four calendar days in a given year (for example, a bypass stack upstream of an acid plant at a non-ferrous ore roasting operation that emits roaster gases during shutdown of the acid plant). Considering a five-year meteorological database spanning 2016--2020, the number of unique ways of assigning the hours of operation to hours of the meteorological database is 208226519296227450624822934282939747178381312. It is clearly impossible to evaluate each of these scenarios in order to determine how many of them would result in a violation. It would also be unreasonable to completely disregard the 4 day/yr restriction in the modeling (i.e., by modeling the source as though it operated continuously), if it would result in different control requirements than those dictated by a more accurate evaluation.
+
+Now suppose that it *were* possible to evaluate all of the possible operating schedules: the only purpose of doing so would be to determine whether the proportion resulting in a modeled violation (i.e., the probability of violation) is tolerably low. Since an indication of the probability of violation is the desired result, this quantity *can* be estimated by considering a representative sample of the possible operating schedules. Doing so is the purpose of a Monte Carlo analysis, which involves three basic steps:
+
+1. Use a random number generator to simulate a representative number (N) of possible operating schedules.
+2. Calculate the design value associated with each of the N simulations.
+3. Based on the simulation results, determine whether the probability of violation is de minimis.
+
+Before discussing the details of how to use this package, it can fairly be asked whether a specialized post-processor is necessary to conduct a Monte Carlo analysis. For example, it might be thought appropriate to conduct the same type of analysis using a "brute force" approach: construct a number of operating schedules thought to representative; run AERMOD for each of the selected schedules, using the EMISFACT or HOUREMIS cards; and then tabulate the design value for each AERMOD run. There are two basic problems with such an approach: first, it is not possible to ensure that a representative sample is chosen if a random number generator is not used; and second, too few simulations can be managed if AERMOD has to be re-run for each simulation.
+
+While around 100, non-random simulations can be managed with a brute force approach, this package permits running 1000-1000000, random simulations in a reasonable amount of time, depending on the number of source groups and receptors considered.
 
 ``` r
 #Convert some POST files (not provided) into impact matrices
