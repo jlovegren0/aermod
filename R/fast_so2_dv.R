@@ -5,6 +5,10 @@
 #' @param sumfn Use \code{max} for max DV at any receptor, default is \code{identity} (DV at each receptor, in order). 
 #' @return A vector of design values.
 #' @export
+## usethis namespace: start
+#' @useDynLib aermod, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
+## usethis namespace: end
 fast_so2_dv <- function(mat,sumfn=identity){
     hrbaseline <- attr(mat,'hrbaseline')
     y1 <- as.integer(lubridate::year(hrbaseline + lubridate::hours(1)))

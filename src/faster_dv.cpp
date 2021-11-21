@@ -1,6 +1,10 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+//' Faster SO2 Design value
+//'
+//' @param x An impact matrix.
+//' @export
 // [[Rcpp::export]]
 NumericVector faster_dv(NumericMatrix x) {
     int ncol = x.ncol();
